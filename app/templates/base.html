@@ -2,10 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flask Blog</title>
 </head>
 <body>
-    <h1>Flask Blog App</h1>
+    <nav>
+        <a href="/">Home</a>
+        <!-- future nav links -->
+    </nav>
+
+    <!-- Content block for child templates -->
+    {% block content %}{% endblock %}
+
 </body>
 </html>
