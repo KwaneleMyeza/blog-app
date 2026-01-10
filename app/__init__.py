@@ -12,6 +12,7 @@ def create_app():
 
     db.init_app(app)
 
+    from app import models
     from app.routes.main import main_bp
     app.register_blueprint(main_bp)
 
