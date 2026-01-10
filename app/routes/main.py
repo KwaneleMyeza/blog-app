@@ -1,13 +1,18 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, abort
+from app.models import Post
 
 main_bp = Blueprint('main', __name__)
 
-# Placeholder posts
-posts = [
-    {"title": "First Post", "snippet": "This is the first post snippet."},
-    {"title": "Second Post", "snippet": "This is the second post snippet."}
-]
-
 @main_bp.route('/')
 def home():
-    return render_template('post_list.html', posts=posts)
+    posts = Post.query.order_by(Post.created_at.desc()).all()
+    return render_template('home.html', posts=posts)
+
+@main_bp.route('/post/<int:post_id>')
+def post_detail(post_id):
+    post = Post.query.get(post_id)
+
+    if post is None:
+        abort(404)
+
+    return render_template('post_detail.html', post=post)
