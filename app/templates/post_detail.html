@@ -8,6 +8,14 @@
       {{ post.created_at.strftime('%d %B %Y') }}
     </p>
     <p class="card-text">{{ post.content }}</p>
+    <form method="POST"
+      action="{{ url_for('main.delete_post', post_id=post.id) }}"
+      onsubmit="return confirm('Are you sure you want to delete this post?');">
+
+      <button type="submit" class="btn btn-danger mt-3">
+          Delete Post
+      </button>
+    </form>
 
     <a href="{{ url_for('main.home') }}" class="btn btn-secondary mt-3">
       ← Back to posts

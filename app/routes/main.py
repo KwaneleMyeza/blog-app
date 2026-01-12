@@ -11,11 +11,7 @@ def home():
 
 @main_bp.route('/post/<int:post_id>')
 def post_detail(post_id):
-    post = Post.query.get(post_id)
-
-    if post is None:
-        abort(404)
-
+    post = Post.query.get_or_404(post_id)
     return render_template('post_detail.html', post=post)
 
 @main_bp.route("/post/new", methods=["GET", "POST"])
@@ -36,3 +32,12 @@ def create_post():
         return redirect(url_for("main.home"))
 
     return render_template("create_post.html")
+
+@main_bp.route('/posts/<int:post_id>/delete', methods=['POST'])
+def delete_post(post_id):
+    post = Post.query.get_or_404(post_id)
+
+    db.session.delete(post)
+    db.session.commit()
+
+    return redirect(url_for('main.home'))
