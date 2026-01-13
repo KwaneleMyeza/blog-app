@@ -41,3 +41,24 @@ def delete_post(post_id):
     db.session.commit()
 
     return redirect(url_for('main.home'))
+
+@main_bp.route('/post/<int:post_id>/edit', methods=['GET', 'POST'])
+def edit_post(post_id):
+    post = Post.query.get_or_404(post_id)
+
+    if request.method == 'POST':
+        title = request.form.get('title')
+        content = request.form.get('content')
+
+        if not title or not content:
+            flash('Title and content are required.', 'danger')
+            return redirect(url_for('main.edit_post', post_id=post.id))
+
+        post.title = title
+        post.content = content
+        db.session.commit()
+
+        flash('Post updated successfully!', 'success')
+        return redirect(url_for('main.post_detail', post_id=post.id))
+
+    return render_template('create_post.html', post=post)
