@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, abort, request, redirect, url_for, flash
-from flask_login import login_required
+from flask_login import login_required, current_user
 from app.models import Post
 from app import db
 
@@ -26,7 +26,7 @@ def create_post():
             flash("Title and content are required.", "danger")
             return redirect(url_for("main.create_post"))
 
-        post = Post(title=title, content=content)
+        post = Post(title=title, content=content, author=current_user)
         db.session.add(post)
         db.session.commit()
 
@@ -40,6 +40,9 @@ def create_post():
 def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
 
+    if post.author != current_user:
+        abort(403)
+
     db.session.delete(post)
     db.session.commit()
 
@@ -49,6 +52,9 @@ def delete_post(post_id):
 @login_required
 def edit_post(post_id):
     post = Post.query.get_or_404(post_id)
+
+    if post.author != current_user:
+        abort(403)
 
     if request.method == 'POST':
         title = request.form.get('title')
