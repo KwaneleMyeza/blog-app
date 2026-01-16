@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, abort, request, redirect, url_for, flash
+from flask_login import login_required
 from app.models import Post
 from app import db
 
@@ -15,6 +16,7 @@ def post_detail(post_id):
     return render_template('post_detail.html', post=post)
 
 @main_bp.route("/post/new", methods=["GET", "POST"])
+@login_required
 def create_post():
     if request.method == "POST":
         title = request.form.get("title")
@@ -34,6 +36,7 @@ def create_post():
     return render_template("create_post.html")
 
 @main_bp.route('/posts/<int:post_id>/delete', methods=['POST'])
+@login_required
 def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
 
@@ -43,6 +46,7 @@ def delete_post(post_id):
     return redirect(url_for('main.home'))
 
 @main_bp.route('/post/<int:post_id>/edit', methods=['GET', 'POST'])
+@login_required
 def edit_post(post_id):
     post = Post.query.get_or_404(post_id)
 
