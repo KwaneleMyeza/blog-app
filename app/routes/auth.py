@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from flask_login import login_user
+from flask_login import login_user, logout_user
 from werkzeug.security import check_password_hash
 from app.models import User
 
@@ -28,3 +28,9 @@ def login():
         return redirect(url_for('main.home'))
 
     return render_template('login.html')
+
+@auth_bp.route('/logout')
+def logout():
+    logout_user()
+    flash('You have been logged out.', 'info')
+    return redirect(url_for('main.home'))
