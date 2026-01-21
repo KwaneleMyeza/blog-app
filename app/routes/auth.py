@@ -29,6 +29,24 @@ def login():
 
     return render_template('login.html')
 
+
+@auth_bp.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        if not username or not email or not password:
+            flash('All fields are required.', 'danger')
+            return redirect(url_for('auth.register'))
+
+        flash('Registration form submitted (placeholder).', 'info')
+        return redirect(url_for('auth.login'))
+
+    return render_template('register.html')
+
+
 @auth_bp.route('/logout')
 def logout():
     logout_user()
