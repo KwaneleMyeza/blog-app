@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash,generate_password_hash
+from app import db
 from app.models import User
 
 auth_bp = Blueprint('auth', __name__)
@@ -41,7 +42,28 @@ def register():
             flash('All fields are required.', 'danger')
             return redirect(url_for('auth.register'))
 
-        flash('Registration form submitted (placeholder).', 'info')
+        # Check if user already exists
+        existing_user = User.query.filter(
+            (User.username == username) | (User.email == email)
+        ).first()
+
+        if existing_user:
+            flash('Username or email already exists.', 'danger')
+            return redirect(url_for('auth.register'))
+
+        # Create new user
+        hashed_password = generate_password_hash(password)
+
+        new_user = User(
+            username=username,
+            email=email,
+            password_hash=hashed_password
+        )
+
+        db.session.add(new_user)
+        db.session.commit()
+
+        flash('Account created successfully. Please log in.', 'success')
         return redirect(url_for('auth.login'))
 
     return render_template('register.html')
