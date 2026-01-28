@@ -16,7 +16,7 @@ This project is part of my ongoing learning and portfolio development as a Softw
 - SQLite database for data persistence
 - Flask Blueprints for modular routing
 - HTML templates with a shared base layout
-- Custom CSS styling
+- Bootstrap
 
 ---
 
@@ -29,7 +29,8 @@ This project is part of my ongoing learning and portfolio development as a Softw
 - **Flask-SQLAlchemy**
 - **Flask-Login**
 - **SQLite**
-- **HTML / CSS**
+- **HTML**
+- **Bootstrap**
 
 ---
 
@@ -63,7 +64,7 @@ run.py
 ## Screenshots
 
 ### Home Page (Logged Out)
-![Home page](screenshots/home_logged_out.png)
+![Home page](screenshots/home_page.png)
 
 ---
 
