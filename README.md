@@ -22,6 +22,19 @@ This project is part of my ongoing learning and portfolio development as a Softw
 
 
 
+## Development Workflow
+
+This project is planned and tracked using Trello, with a focus on small, incremental changes.
+
+- One Trello card per task
+- One Git branch per card
+- Each branch addresses a single responsibility
+- Changes are merged only when the task is complete
+
+This workflow helps keep the commit history clean and makes progress easy to track.
+
+
+
 ## Tech Stack
 
 - **Python**
