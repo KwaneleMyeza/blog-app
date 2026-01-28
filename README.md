@@ -1,4 +1,4 @@
-# Personal Portfolio Website
+# Flask Blog Application
 
 A simple blog web application built with Flask that allows users to register, log in, create posts, and view blog content.  
 This project is part of my ongoing learning and portfolio development as a Software Engineer, with a focus on clean structure, best practices, and incremental improvements.
